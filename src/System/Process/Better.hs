@@ -19,17 +19,12 @@ import           System.Exit
 import           System.Process.Copied hiding (processFailedException)
 import qualified System.Process.Copied as Copied
 
+-- | construct a `ShellCommand` from a string literal
 instance IsString CmdSpec where
   fromString = ShellCommand
 
 command :: CmdSpec -> CreateProcess
 command c = (proc undefined undefined) {cmdspec = c}
-
-{-
-readProcess :: CmdSpec -> String -> IO String
-readProcess cmd = case cmd of
-  RawCommand c args -> Process.readProcess c args
-  -}
 
 -- | @readProcess@ forks an external process, reads its standard output
 -- strictly, blocking until the process terminates, and returns the output
@@ -54,7 +49,7 @@ readProcess cmd = case cmd of
 --
 -- The arguments are:
 --
--- * The command to run, which must be in the $PATH, or an absolute path
+-- * The command to run, which must be in the $PATH, or an absolute or relative path
 --
 -- * A list of separate command line arguments to the program
 --
@@ -62,6 +57,7 @@ readProcess cmd = case cmd of
 --
 readProcess
     :: CmdSpec                  -- ^ command to run
+
     -> String                   -- ^ standard input
     -> IO String                -- ^ standard output
 readProcess cmd input = do
