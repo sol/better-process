@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, OverloadedLists #-}
+{-# LANGUAGE OverloadedStrings #-}
 module System.Process.BetterSpec (main, spec) where
 
 import           Test.Hspec

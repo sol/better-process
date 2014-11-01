@@ -1,5 +1,8 @@
 {-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+#if __GLASGOW_HASKELL__ == 700
+{-# OPTIONS_GHC -fno-warn-incomplete-patterns #-}
+#endif
 module System.Process.Better (
   CmdSpec(..)
 , readProcess

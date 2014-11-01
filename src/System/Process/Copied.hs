@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# OPTIONS_GHC -fno-warn-unused-imports #-}
 -- | Definitions in this module are Copied verbatim from "System.Process".
 module System.Process.Copied (
   withCreateProcess_
@@ -7,17 +8,30 @@ module System.Process.Copied (
 , ignoreSigPipe
 ) where
 
-import           System.Process
-import           System.Process.Internals
+import System.Process
 
 import Prelude hiding (mapM)
+
+import System.Process.Internals
+
 import Control.Concurrent
+import Control.DeepSeq (rnf)
 import Control.Exception (SomeException, mask, try, throwIO)
 import qualified Control.Exception as C
+import Control.Monad
+import Data.Maybe
+import Foreign
 import Foreign.C
+import System.Exit      ( ExitCode(..) )
 import System.IO
-import System.IO.Error
-import GHC.IO.Exception
+import System.IO.Error (mkIOError, ioeSetErrorString)
+
+import GHC.IO.Exception ( ioException, IOErrorType(..), IOException(..) )
+
+#if !MIN_VERSION_process(1,2,0)
+createProcess_ :: String -> CreateProcess -> IO (Maybe Handle, Maybe Handle, Maybe Handle, ProcessHandle)
+createProcess_ _ = createProcess
+#endif
 
 withCreateProcess_
   :: String
