@@ -2,6 +2,8 @@
 module System.Process.BetterSpec (main, spec) where
 
 import           Test.Hspec
+import           System.IO
+import           System.IO.Silently
 
 import           System.Process.Better
 
@@ -19,3 +21,7 @@ spec = do
 
     it "can be used with a String as command" $ do
       readProcess "echo foo" "" `shouldReturn` "foo\n"
+
+    context "when specified command does not exist" $ do
+      it "throws an exception" $ do
+        hSilence [stderr] (readProcess "foo" "") `shouldThrow` anyIOException
