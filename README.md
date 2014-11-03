@@ -1,4 +1,4 @@
-**NOTE: This is still early stage, do not expect it to be useful!*
+**NOTE: This is still early stage, do not expect it to be useful!**
 
 better-process
 ==============
